@@ -1,19 +1,29 @@
 import React, { Component} from "react";
 import ReactDOM from "react-dom";
+import Counter from "./components/counter.js";
+import { Provider } from "react-redux";
+import counterReducer from "./redux/reducers/reducers.js";
+import { createStore, combineReducers,compose } from "redux";
 
-class App extends Component{
+let reducers = combineReducers({
+	counterReducer
+})
+
+let store = createStore(reducers,compose(window.devToolsExtension? window.devToolsExtension():f=>f))
+
+class Main extends Component{
 	render(){
 		return(
 			<div>
-				<h1>React Boilerplate!</h1>
+				<Counter />
 			</div>
 		)
 	}
 }
 
-export default App;
-
 ReactDOM.render(
-	<App />,
-	document.getElementById('app')
+	<Provider store = {store}>
+		<Main/>
+	</Provider>,
+	document.getElementById('root')
 );
